@@ -34,20 +34,24 @@ def vortex(env, args, kwargs):
     else:
         if args[0] in VORTEX_MAP:
             env.change_directory(VORTEX_MAP[args[0]])
-    
+
 def vortex_set(env, args, kwargs):
     """POINTNAME DIR@Create new vortex point POINTNAME to directory DIR."""
 
-    _map[args[0]] = args[1]
-    pickle.dump(_map, open(path_to_map, "wb"))
-        
+    VORTEX_MAP.update(kwargs)
+    pickle.dump(VORTEX_MAP, open(PATH_TO_MAP, "wb"))
     
 def vortex_remove(env, args, kwargs):
     """POINT@Delete vortex point POINT."""
-    del _map[args[0]]
-    pickle.dump(_map, open(path_to_map, "wb"))
+    del VORTEX_MAP[args[0]]
+    pickle.dump(VORTEX_MAP, open(PATH_TO_MAP, "wb"))
+
+def vortex_list(env, args, kwargs):
+    """@List all vortex points."""
+    return [i + " -> " + VORTEX_MAP[i] for i in VORTEX_MAP]
     
 verbs = {"vortex":vortex,
          "vortex_set":vortex_set,
          "vortex_remove":vortex_remove,
+         "vortex_list":vortex_list,
         }
