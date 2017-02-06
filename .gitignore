@@ -1,0 +1,5 @@
+# emacs save files
+*~
+
+# compiled python
+*.pyc
