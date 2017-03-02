@@ -1,4 +1,3 @@
-
 """
 [vortex.py]
 
@@ -43,7 +42,8 @@ def vortex_set(env, args, kwargs):
     
 def vortex_remove(env, args, kwargs):
     """POINT@Delete vortex point POINT."""
-    del VORTEX_MAP[args[0]]
+    for vp in args:
+        del VORTEX_MAP[vp]
     pickle.dump(VORTEX_MAP, open(PATH_TO_MAP, "wb"))
 
 def vortex_list(env, args, kwargs):
