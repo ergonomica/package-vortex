@@ -26,32 +26,29 @@ except IOError: # when the file may not be read
     VORTEX_MAP = {}
 
 
-def vortex(env, args, kwargs):
-    """POINT@Go to vortex point POINT."""
-    if len(args) > 1:
-        print("[ergo: vortex: ArgumentError]: More than 1 arguments passed.")
-    else:
-        if args[0] in VORTEX_MAP:
-            env.change_directory(VORTEX_MAP[args[0]])
-
-def vortex_set(env, args, kwargs):
-    """POINTNAME DIR@Create new vortex point POINTNAME to directory DIR."""
-
-    VORTEX_MAP.update(kwargs)
-    pickle.dump(VORTEX_MAP, open(PATH_TO_MAP, "wb"))
+def vortex(argc):
+    """vortex: Navigate around the filesystem.
     
-def vortex_remove(env, args, kwargs):
-    """POINT@Delete vortex point POINT."""
-    for vp in args:
-        del VORTEX_MAP[vp]
-    pickle.dump(VORTEX_MAP, open(PATH_TO_MAP, "wb"))
+    Usage:
+       vortex POINT
+       vortex set NAME PATH
+       vortex remove NAME...
+       vortex list
+    """
 
-def vortex_list(env, args, kwargs):
-    """@List all vortex points."""
-    return [i + " -> " + VORTEX_MAP[i] for i in VORTEX_MAP]
+    if argc.args['POINT']:
+        env.change_directory(VORTEX_MAP[argc.args['POINT']])
+     
+    elif argc.args['set']:
+        VORTEX_MAP.update(kwargs)
+        pickle.dump(VORTEX_MAP, open(PATH_TO_MAP, "wb"))
     
-verbs = {"vortex":vortex,
-         "vortex_set":vortex_set,
-         "vortex_remove":vortex_remove,
-         "vortex_list":vortex_list,
-        }
+    elif argc.args['remove']:
+        for vp in argc.args['NAME']:
+            del VORTEX_MAP[vp]
+         pickle.dump(VORTEX_MAP, open(PATH_TO_MAP, "wb"))
+
+    elif argc.args['list']:
+        return [x for x in VORTEX_MAP]
+    
+verbs['vortex'] = vortex
