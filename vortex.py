@@ -25,7 +25,6 @@ try:
 except IOError: # when the file may not be read
     VORTEX_MAP = {}
 
-
 def vortex(argc):
     """vortex: Navigate around the filesystem.
     
@@ -51,4 +50,4 @@ def vortex(argc):
     elif argc.args['list']:
         return [x for x in VORTEX_MAP]
     
-verbs['vortex'] = vortex
+exports = {"vortex": vortex}
