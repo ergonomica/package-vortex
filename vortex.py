@@ -47,7 +47,7 @@ def vortex(argc):
     elif argc.args['remove']:
         for vp in argc.args['NAME']:
             del VORTEX_MAP[vp]
-         pickle.dump(VORTEX_MAP, open(PATH_TO_MAP, "wb"))
+            pickle.dump(VORTEX_MAP, open(PATH_TO_MAP, "wb"))
 
     elif argc.args['list']:
         return [x for x in VORTEX_MAP]
