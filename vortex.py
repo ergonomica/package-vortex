@@ -35,6 +35,8 @@ def vortex(argc):
        vortex list
     """
 
+    env = argc.env
+    
     if argc.args['POINT']:
         env.change_directory(VORTEX_MAP[argc.args['POINT']])
      
